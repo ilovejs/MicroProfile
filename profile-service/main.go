@@ -65,12 +65,14 @@ func main() {
 	defer event.Close()
 
   r := mux.NewRouter()
-  r.HandleFunc("/profiles", createProfileHandler).Methods("POST", "OPTIONS")
-  r.HandleFunc("/profiles/{id:[0-9]+}", UpdateProfileHandler).Methods("PUT", "OPTIONS")
+  // Attach "OPTIONS" for extra info
+  r.HandleFunc("/profiles", createProfileHandler).Methods("POST", )
+  r.HandleFunc("/profiles/{id:[0-9]+}", UpdateProfileHandler).Methods("PUT", )
 
   log.Print("Profile-Services")
 
-  handler := cors.Default().Handler(r)
+  // Default() is not useful when PUT
+  handler := cors.AllowAll().Handler(r)
   if err := http.ListenAndServe(":8081", handler); err != nil {
     log.Fatal(err)
   }

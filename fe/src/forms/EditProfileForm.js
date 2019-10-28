@@ -23,13 +23,17 @@ const EditUserForm = props => {
         event.preventDefault()
         props.updateProfile(profile.id, profile)
         // remote
-        console.dir(PUT_PROFILE_URL_PRE)
-        axios.post(PUT_PROFILE_URL_PRE + profile.id, {
-          "name": profile.name,
-          "gender": (profile.gender === "true"),
-          "dob": profile.dob,
-          "phoneNo": profile.phoneNo,
-          "postCode": parseInt(profile.postCode)
+        console.dir(PUT_PROFILE_URL_PRE + profile.id);
+        axios({
+          method: 'PUT',
+          url: PUT_PROFILE_URL_PRE + profile.id,
+          data: {
+            name: profile.name,
+            gender: (profile.gender === "true"),
+            dob: profile.dob,
+            phoneNo: profile.phoneNo,
+            postCode: parseInt(profile.postCode)
+          },
         })
         .then(res => {
           console.log(res.data)
