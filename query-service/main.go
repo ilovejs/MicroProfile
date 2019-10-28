@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"log"
+  "github.com/gorilla/handlers"
+  "log"
 	"net/http"
 	"time"
 
@@ -73,9 +74,12 @@ func main() {
 	})
 	defer event.Close()
 
-	// Run HTTP server
 	router := newRouter()
-	if err := http.ListenAndServe(":8080", router); err != nil {
-		log.Fatal(err)
-	}
+  headersOk := handlers.AllowedHeaders([]string{"X-Requested-With, Content-Type, Authorization"})
+  originsOk := handlers.AllowedOrigins([]string{"*"}) // os.Getenv("ORIGIN_ALLOWED")
+  methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+  if err := http.ListenAndServe(":8080",
+    handlers.CORS(originsOk, headersOk, methodsOk)(router)); err != nil {
+    log.Fatal(err)
+  }
 }

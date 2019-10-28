@@ -1,16 +1,17 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
-	"time"
+  "fmt"
+  "log"
+  "net/http"
+  "time"
 
-	"github.com/gorilla/mux"
-	"github.com/ilovejs/profile/db"
-	"github.com/ilovejs/profile/event"
-	"github.com/kelseyhightower/envconfig"
-	"github.com/tinrab/retry"
+  "github.com/gorilla/handlers"
+  "github.com/gorilla/mux"
+  "github.com/ilovejs/profile/db"
+  "github.com/ilovejs/profile/event"
+  "github.com/kelseyhightower/envconfig"
+  "github.com/tinrab/retry"
 )
 
 type Config struct {
@@ -18,14 +19,6 @@ type Config struct {
 	PostgresUser     string `envconfig:"POSTGRES_USER"`
 	PostgresPassword string `envconfig:"POSTGRES_PASSWORD"`
 	NatsAddress      string `envconfig:"NATS_ADDRESS"`
-}
-
-func newRouter() (router *mux.Router) {
-	router = mux.NewRouter()
-	//use handler.go
-	router.HandleFunc("/profiles", createProfileHandler).Methods("POST")
-	router.HandleFunc("/profiles/{id:[0-9]+}", UpdateProfileHandler).Methods("PUT")
-	return
 }
 
 func main() {
@@ -71,9 +64,15 @@ func main() {
 	})
 	defer event.Close()
 
-	// Run HTTP server
-	router := newRouter()
-	if err := http.ListenAndServe(":8080", router); err != nil {
+  router := mux.NewRouter()
+  router.HandleFunc("/profiles", createProfileHandler).Methods("POST")
+  router.HandleFunc("/profiles/{id:[0-9]+}", UpdateProfileHandler).Methods("PUT")
+
+  headersOk := handlers.AllowedHeaders([]string{"X-Requested-With, Content-Type, Authorization"})
+  originsOk := handlers.AllowedOrigins([]string{"*"}) // os.Getenv("ORIGIN_ALLOWED")
+  methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+  if err := http.ListenAndServe(":8080",
+    handlers.CORS(originsOk, headersOk, methodsOk)(router)); err != nil {
 		log.Fatal(err)
 	}
 }

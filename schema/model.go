@@ -21,8 +21,8 @@ type Profile struct {
 	Name     string    `json:"name"`
 	Gender   bool      `json:"gender"`
 	DoB      time.Time `json:"dob"`
-	PostCode int       `json:"postcode"`
-	PhoneNo  string    `json:"phone_no"`
+	PostCode int       `json:"postCode"`
+	PhoneNo  string    `json:"phoneNo"`
 }
 
 type UpdateResponse struct {
