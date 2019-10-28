@@ -20,24 +20,26 @@ func createProfileHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	// New entity
-	np := schema.ProfileReq{}
+	newPfl := schema.ProfileReq{}
 	// Simple validation
-	err := json.Unmarshal(reqBody, &np)
+	err := json.Unmarshal(reqBody, &newPfl)
 	if err != nil {
 		util.ResponseError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	dob, _ := time.Parse("2006-01-02", np.DoB)
+
+	dob, _ := time.Parse("2006-01-02", newPfl.DoB)
+
 	log.Print("dob: ", dob)
-	log.Print("np.Dob: ", np.DoB)
+	log.Print("newPfl.Dob: ", newPfl.DoB)
 
 	// Parse json string from layout
 	profile := schema.Profile{
-		Name:     np.Name,
-		Gender:   np.Gender,
+		Name:     newPfl.Name,
+		Gender:   newPfl.Gender,
 		DoB:      dob,
-		PostCode: np.PostCode,
-		PhoneNo:  np.PhoneNo,
+		PostCode: newPfl.PostCode,
+		PhoneNo:  newPfl.PhoneNo,
 	}
 
 	// Insert to DB
@@ -61,8 +63,10 @@ func UpdateProfileHandler(w http.ResponseWriter, r *http.Request) {
 	pid, _ := strconv.Atoi(vars["id"])
 	ctx := r.Context()
 	np := schema.ProfileReq{}
+
 	// Simple validation
 	reqBody, _ := ioutil.ReadAll(r.Body)
+
 	err := json.Unmarshal(reqBody, &np)
 	if err != nil {
 		util.ResponseError(w, http.StatusInternalServerError, err.Error())

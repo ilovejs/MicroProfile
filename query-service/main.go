@@ -36,15 +36,14 @@ func main() {
 
 	// Connect to PostgreSQL
 	retry.ForeverSleep(2*time.Second, func(attempt int) error {
+		//addr := fmt.Sprintf("postgres://%s:%s@localhost/%s?sslmode=disable",
+		//	"postgres",
+		//	"123123",
+		//	"postgres",
+		//)
 
-		addr := fmt.Sprintf("postgres://%s:%s@localhost/%s?sslmode=disable",
-			"postgres",
-			"123123",
-			"postgres",
-		)
-
-		//addr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		//  "postgres", 5432, cfg.PostgresUser, cfg.PostgresPassword, cfg.PostgresDB)
+		addr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		 "postgres", 5432, cfg.PostgresUser, cfg.PostgresPassword, cfg.PostgresDB)
 
 		repo, err := db.NewPostgres(addr)
 		if err != nil {
@@ -59,8 +58,8 @@ func main() {
 
 	// Connect to Nats
 	retry.ForeverSleep(2*time.Second, func(_ int) error {
-		//es, err := event.NewNats(fmt.Sprintf("nats://%s", cfg.NatsAddress))
-		es, err := event.NewNats(fmt.Sprintf("nats://%s", "0.0.0.0:4222"))
+		es, err := event.NewNats(fmt.Sprintf("nats://%s", cfg.NatsAddress))
+		//es, err := event.NewNats(fmt.Sprintf("nats://%s", "0.0.0.0:4222"))
 		if err != nil {
 			log.Println(err)
 			return err

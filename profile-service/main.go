@@ -30,15 +30,15 @@ func main() {
 
 	// Connect to PostgreSQL
 	retry.ForeverSleep(2*time.Second, func(attempt int) error {
+	  // local
+		//addr := fmt.Sprintf("postgres://%s:%s@localhost/%s?sslmode=disable",
+		//	"postgres",
+		//	"123123",
+		//	"postgres",
+		//)
 
-		addr := fmt.Sprintf("postgres://%s:%s@localhost/%s?sslmode=disable",
-			"postgres",
-			"123123",
-			"postgres",
-		)
-
-		//addr := fmt.Sprintf("postgres://%s:%s@postgres/%s?sslmode=disable",
-		//  cfg.PostgresUser, cfg.PostgresPassword, cfg.PostgresDB)
+		addr := fmt.Sprintf("postgres://%s:%s@postgres/%s?sslmode=disable",
+		 cfg.PostgresUser, cfg.PostgresPassword, cfg.PostgresDB)
 
 		repo, err := db.NewPostgres(addr)
 		if err != nil {
@@ -52,8 +52,8 @@ func main() {
 
 	// Connect to NATs
 	retry.ForeverSleep(2*time.Second, func(_ int) error {
-		es, err := event.NewNats(fmt.Sprintf("nats://%s", "0.0.0.0:4222"))
-		//es, err := event.NewNats(fmt.Sprintf("nats://%s", cfg.NatsAddress))
+		//es, err := event.NewNats(fmt.Sprintf("nats://%s", "0.0.0.0:4222"))
+		es, err := event.NewNats(fmt.Sprintf("nats://%s", cfg.NatsAddress))
 
 		if err != nil {
 			log.Println(err)
@@ -65,6 +65,7 @@ func main() {
 	defer event.Close()
 
   r := mux.NewRouter()
+
   // Attach "OPTIONS" for extra info
   r.HandleFunc("/profiles", createProfileHandler).Methods("POST", )
   r.HandleFunc("/profiles/{id:[0-9]+}", UpdateProfileHandler).Methods("PUT", )
@@ -73,7 +74,8 @@ func main() {
 
   // Default() is not useful when PUT
   handler := cors.AllowAll().Handler(r)
-  if err := http.ListenAndServe(":8081", handler); err != nil {
+  // change to 8081 for debugging
+  if err := http.ListenAndServe(":8080", handler); err != nil {
     log.Fatal(err)
   }
 }

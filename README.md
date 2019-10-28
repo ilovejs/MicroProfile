@@ -4,17 +4,16 @@ FroneEnd -> Nginx -> /POST/profile [Profile Service] -> NATS -> [Pusher Services
                                    -> Write DB (Postgres)
                      /GET/profiles [Query Service] -> Read DB
 
-# Run
+# Get Go Dependencies
 code profile
 go mod init
 go mod vendor
 
-# step 1
+# Docker compose
 docker-compose up -d --build
 
-# step 2
+# Run front end
 cd frontend && yarn && yarn serve
-
 handle members profiles
 
 # API
@@ -81,5 +80,31 @@ PS:
 # TODO:
 * test
 * fix problem if it is from nginx, docker compose
+
+# Some libraries:
+
+[mux]
+https://www.gorillatoolkit.org/pkg/handlers
+[css]
+https://taniarascia.github.io/primitive
+
+# Tips
+
+[Find CORS issue in chrome console if front end not loading]
+Access to XMLHttpRequest at 'http://localhost:8080/profiles' from origin 'http://localhost:3000' 
+has been blocked by CORS policy: The 'Access-Control-Allow-Origin' header contains 
+multiple values '*, *', but only one is allowed.
+
+[build fleet images]
+docker-compose stop
+docker-compose rm
+docker-compose up -d --build
+docker-compose ps
+
+[cors]
+https://enable-cors.org/server_nginx.html
+
+
+
 
 

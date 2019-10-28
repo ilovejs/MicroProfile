@@ -13,7 +13,6 @@ services:
       POSTGRES_DB: "profile"
       POSTGRES_USER: "profile"
       POSTGRES_PASSWORD: "123456"
-      POSTGRES_HOST: "postgres"
       NATS_ADDRESS: "nats:4222"
   query:
     build: "."
