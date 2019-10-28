@@ -32,11 +32,9 @@ func main() {
 	retry.ForeverSleep(2*time.Second, func(attempt int) error {
 		// local
 		//addr := fmt.Sprintf("postgres://%s:%s@localhost/%s?sslmode=disable",
-		//	"postgres",
-		//	"123123",
-		//	"postgres",
-		//)
+		//  "postgres", "123123", "postgres", )
 
+		// docker-compose
 		addr := fmt.Sprintf("postgres://%s:%s@postgres/%s?sslmode=disable",
 			cfg.PostgresUser, cfg.PostgresPassword, cfg.PostgresDB)
 
@@ -52,7 +50,9 @@ func main() {
 
 	// Connect to NATs
 	retry.ForeverSleep(2*time.Second, func(_ int) error {
+		// local
 		//es, err := event.NewNats(fmt.Sprintf("nats://%s", "0.0.0.0:4222"))
+		// docker-compose
 		es, err := event.NewNats(fmt.Sprintf("nats://%s", cfg.NatsAddress))
 
 		if err != nil {
@@ -67,6 +67,7 @@ func main() {
 	r := mux.NewRouter()
 
 	// Attach "OPTIONS" for extra info
+	r.HandleFunc("/profiles", listProfilesHandler).Methods("GET")
 	r.HandleFunc("/profiles", createProfileHandler).Methods("POST", "OPTIONS")
 	r.HandleFunc("/profiles/{id:[0-9]+}", UpdateProfileHandler).Methods("PUT", "OPTIONS")
 

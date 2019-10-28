@@ -8,20 +8,7 @@ services:
       - "postgres"
       - "nats"
     ports:
-      - "8080"
-    environment:
-      POSTGRES_DB: "profile"
-      POSTGRES_USER: "profile"
-      POSTGRES_PASSWORD: "123456"
-      NATS_ADDRESS: "nats:4222"
-  query:
-    build: "."
-    command: "query-service"
-    depends_on:
-      - "postgres"
-      - "nats"
-    ports:
-      - "8080"
+      - "8080:8080"
     environment:
       POSTGRES_DB: "profile"
       POSTGRES_USER: "profile"
