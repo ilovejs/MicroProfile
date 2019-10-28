@@ -1,17 +1,17 @@
 package main
 
 import (
-	"fmt"
-  "github.com/gorilla/handlers"
+  "fmt"
+  "github.com/rs/cors"
   "log"
-	"net/http"
-	"time"
+  "net/http"
+  "time"
 
-	"github.com/gorilla/mux"
-	"github.com/ilovejs/profile/db"
-	"github.com/ilovejs/profile/event"
-	"github.com/kelseyhightower/envconfig"
-	"github.com/tinrab/retry"
+  "github.com/gorilla/mux"
+  "github.com/ilovejs/profile/db"
+  "github.com/ilovejs/profile/event"
+  "github.com/kelseyhightower/envconfig"
+  "github.com/tinrab/retry"
 )
 
 type Config struct {
@@ -23,8 +23,7 @@ type Config struct {
 
 func newRouter() (router *mux.Router) {
 	router = mux.NewRouter()
-	router.HandleFunc("/profiles", listProfilesHandler).
-		Methods("GET")
+	router.HandleFunc("/profiles", listProfilesHandler).Methods("GET")
 	return
 }
 
@@ -74,12 +73,11 @@ func main() {
 	})
 	defer event.Close()
 
-	router := newRouter()
-  headersOk := handlers.AllowedHeaders([]string{"X-Requested-With, Content-Type, Authorization"})
-  originsOk := handlers.AllowedOrigins([]string{"*"}) // os.Getenv("ORIGIN_ALLOWED")
-  methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
-  if err := http.ListenAndServe(":8080",
-    handlers.CORS(originsOk, headersOk, methodsOk)(router)); err != nil {
+	// Server
+	r := newRouter()
+  handler := cors.Default().Handler(r)
+
+  if err := http.ListenAndServe(":8080", handler); err != nil {
     log.Fatal(err)
   }
 }

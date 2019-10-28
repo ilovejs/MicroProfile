@@ -7,8 +7,8 @@ type ProfileReq struct {
 	Name     string `json:"name" validate:"required"`
 	Gender   bool   `json:"gender"`
 	DoB      string `json:"dob"`
-	PostCode int    `json:"postcode"`
-	PhoneNo  string `json:"phone_no"`
+	PostCode int    `json:"postCode"`
+	PhoneNo  string `json:"phoneNo"`
 }
 
 type ProfileResp struct {

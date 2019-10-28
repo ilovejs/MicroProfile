@@ -6,11 +6,11 @@ import (
   "net/http"
   "time"
 
-  "github.com/gorilla/handlers"
   "github.com/gorilla/mux"
   "github.com/ilovejs/profile/db"
   "github.com/ilovejs/profile/event"
   "github.com/kelseyhightower/envconfig"
+  "github.com/rs/cors"
   "github.com/tinrab/retry"
 )
 
@@ -64,15 +64,14 @@ func main() {
 	})
 	defer event.Close()
 
-  router := mux.NewRouter()
-  router.HandleFunc("/profiles", createProfileHandler).Methods("POST")
-  router.HandleFunc("/profiles/{id:[0-9]+}", UpdateProfileHandler).Methods("PUT")
+  r := mux.NewRouter()
+  r.HandleFunc("/profiles", createProfileHandler).Methods("POST", "OPTIONS")
+  r.HandleFunc("/profiles/{id:[0-9]+}", UpdateProfileHandler).Methods("PUT", "OPTIONS")
 
-  headersOk := handlers.AllowedHeaders([]string{"X-Requested-With, Content-Type, Authorization"})
-  originsOk := handlers.AllowedOrigins([]string{"*"}) // os.Getenv("ORIGIN_ALLOWED")
-  methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
-  if err := http.ListenAndServe(":8080",
-    handlers.CORS(originsOk, headersOk, methodsOk)(router)); err != nil {
-		log.Fatal(err)
-	}
+  log.Print("Profile-Services")
+
+  handler := cors.Default().Handler(r)
+  if err := http.ListenAndServe(":8081", handler); err != nil {
+    log.Fatal(err)
+  }
 }

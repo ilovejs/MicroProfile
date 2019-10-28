@@ -8,6 +8,7 @@ const App = () => {
 
   const [ data, setData  ] = useState({ profiles: []});
 
+  //https://www.robinwieruch.de/react-hooks-fetch-data
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios('http://localhost:8080/profiles')
@@ -24,14 +25,23 @@ const App = () => {
 	// 	{ id: 3, name: 'Joe', gender: 0, dob: "2001-02-11", postCode: "2011", phoneNo: "0433333333" },
 	// ]
 
-	const initialFormState = { id: 4, name: '', gender: 0, dob: "2001-02-11", postCode: "2011", phoneNo: ""  }
+  const initialFormState = {
+    id: 4,
+    name: '',
+    gender: true,
+    dob: "2001-02-11",
+    postCode: "2011",
+    phoneNo: ""
+  }
+
 	const [ currentProfile, setCurrentProfile ] = useState(initialFormState)
 
   const [ editing, setEditing ] = useState(false)
 
 	// CRUD
 	const addProfile = profile => {
-		profile.id = data.length + 1
+    profile.id = data.length + 1
+    console.log(`addProfile: `, profile)
 		setData([ ...data, profile ])
 	}
 
@@ -76,7 +86,7 @@ const App = () => {
 					) : (
 						<Fragment>
 							<h2>Add</h2>
-							<AddProfileForm addUser={addProfile} />
+							<AddProfileForm addProfile={addProfile} />
 						</Fragment>
 					)}
 				</div>

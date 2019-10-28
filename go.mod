@@ -19,6 +19,7 @@ require (
 	github.com/nats-io/nuid v1.0.0 // indirect
 	github.com/olivere/elastic v6.1.18+incompatible // indirect
 	github.com/pkg/errors v0.8.0 // indirect
+	github.com/rs/cors v1.7.0
 	github.com/segmentio/ksuid v1.0.1 // indirect
 	github.com/thedevsaddam/govalidator v1.9.8 // indirect
 	github.com/tinrab/retry v1.0.0
