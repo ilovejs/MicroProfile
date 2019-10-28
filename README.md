@@ -34,8 +34,8 @@ A member profile is a set of personal information about a member like:
 - Create new profiles
 - Update profiles
 - List profiles
-- Validate profile data (you are free to decide the validations needed, but stick to the basics here. 
-For example: Postcode is number only) 
+- Validate profile data (you are free to decide the validations needed, 
+but stick to the basics here. For example: Postcode is number only) 
 
 # Component:
 
@@ -75,12 +75,10 @@ PS:
  You are not required to complete all solutions, but be sure the first 2 (web API and Interface) and the last (Codebase/Versioning/Documentation) are working. 
  Try to complete as much as possible, every solution counts.
 
-# release 1 for onley mvp
+# release 1 for mvp
 # release 2 for more functions
 
 # TODO:
-
-* hook up with react front end
 * test
 * fix problem if it is from nginx, docker compose
 

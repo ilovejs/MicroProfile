@@ -1,0 +1,11 @@
+.left-panel {
+  flex: 1 30%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.right-panel {
+  flex: 2 70%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

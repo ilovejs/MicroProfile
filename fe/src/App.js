@@ -3,6 +3,7 @@ import AddProfileForm from './forms/AddProfileForm'
 import EditProfileForm from './forms/EditProfileForm'
 import ProfileTable from './tables/ProfileTable'
 import axios from 'axios'
+import { GET_PROFILE_URL } from './urls'
 
 const App = () => {
 
@@ -11,7 +12,7 @@ const App = () => {
   //https://www.robinwieruch.de/react-hooks-fetch-data
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios('http://localhost:8080/profiles')
+      const result = await axios(GET_PROFILE_URL)
       console.log(result)
       setData(result.data)
     }
@@ -42,7 +43,8 @@ const App = () => {
 	const addProfile = profile => {
     profile.id = data.length + 1
     console.log(`addProfile: `, profile)
-		setData([ ...data, profile ])
+    // prepend to top since api return recent id to top
+		setData([ profile, ...data ])
 	}
 
 	const deleteProfile = id => {
@@ -70,9 +72,9 @@ const App = () => {
 
 	return (
 		<div className="container">
-			<h1>CRUD for Profile</h1>
+			<h1>Profile Create | Update | List</h1>
 			<div className="flex-row">
-				<div className="flex-large">
+				<div className="left-panel">
 					{editing ? (
 						<Fragment>
 							<h2>Edit</h2>
@@ -91,7 +93,7 @@ const App = () => {
 					)}
 				</div>
 
-				<div className="flex-large">
+				<div className="right-panel">
 					<h2>View users</h2>
           <ProfileTable
             profiles={data}

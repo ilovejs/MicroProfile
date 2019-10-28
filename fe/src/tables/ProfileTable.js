@@ -17,7 +17,7 @@ const ProfileTable = props => (
         props.profiles.map(profile => (
           <tr key={profile.id}>
             <td>{profile.name}</td>
-            <td>{profile.gender}</td>
+            <td>{profile.gender === true ? 'Male': 'Female'}</td>
             <td>{profile.dob}</td>
             <td>{profile.postCode}</td>
             <td>{profile.phoneNo}</td>

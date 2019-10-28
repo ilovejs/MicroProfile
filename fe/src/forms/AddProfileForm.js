@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import POST_PROFILE_URL from '../urls'
+import { POST_PROFILE_URL } from '../urls.js'
 
 const AddProfileForm = props => {
   const initialFormState = {
@@ -19,10 +19,6 @@ const AddProfileForm = props => {
 		setProfile({ ...user, [name]: value })
   }
 
-  // handleChange(event) {
-  //   setState({value: event.target.value});
-  // }
-
 	return (
 		<form
 			onSubmit={event => {
@@ -31,18 +27,19 @@ const AddProfileForm = props => {
         // Add user button
 				props.addProfile(user)
         setProfile(initialFormState)
+        console.dir(POST_PROFILE_URL)
         // remote
-        // const {id, ...userNoId} = user
         axios.post(POST_PROFILE_URL,{
           "name": user.name,
-          "gender": user.gender,
+          "gender": (user.gender === "true"),
           "dob": user.dob,
           "phoneNo": user.phoneNo,
           "postCode": parseInt(user.postCode)
         })
         .then(res => {
-          // console.log(`userNoId: `, userNoId);
-          console.log(res.data);
+          console.log(res.data)
+        }).catch(e => {
+          alert(e)
         })
 			}}
 		>
