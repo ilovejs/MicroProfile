@@ -1,0 +1,350 @@
+{
+	"info": {
+		"_postman_id": "ef3273d2-3883-405c-80a1-b74799e41b51",
+		"name": "Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "af1f8ff5-b9f2-4f8e-b9e1-2afdf3327c85",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);",
+							"",
+							"tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+							"",
+							"var user = responseJSON.user || {};",
+							"",
+							"tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+							"tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+							"tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Michael 09\",\n    \"gender\": true,\n    \"dob\": \"2019-10-28\",\n    \"phoneNo\": \"425569579\",\n    \"postCode\": 1112\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/profiles",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"profiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "af1f8ff5-b9f2-4f8e-b9e1-2afdf3327c85",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);",
+							"",
+							"tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+							"",
+							"var user = responseJSON.user || {};",
+							"",
+							"tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+							"tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+							"tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/profiles",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"profiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "af1f8ff5-b9f2-4f8e-b9e1-2afdf3327c85",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);",
+							"",
+							"tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+							"",
+							"var user = responseJSON.user || {};",
+							"",
+							"tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+							"tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+							"tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"iii\",\n\t\"gender\": false,\n    \"dob\": \"2013-03-21\",\n    \"phone_no\": \"0822222222\",\n    \"postcode\": 3111\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/profiles/41",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"profiles",
+						"41"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wrong shape",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "af1f8ff5-b9f2-4f8e-b9e1-2afdf3327c85",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);",
+							"",
+							"tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+							"",
+							"var user = responseJSON.user || {};",
+							"",
+							"tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+							"tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+							"tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"name\": \"Michael Zhuang\",\n        \"gender\": true,\n        \"dob\": \"2019-10-28\",\n        \"phoneNo\": \"425569579\",\n        \"postCode\": \"1111\"\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/profiles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"profiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Error] postCode is string",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "af1f8ff5-b9f2-4f8e-b9e1-2afdf3327c85",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);",
+							"",
+							"tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+							"",
+							"var user = responseJSON.user || {};",
+							"",
+							"tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+							"tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+							"tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Michael Zhuang\",\n    \"gender\": true,\n    \"dob\": \"2019-10-28\",\n    \"phoneNo\": \"425569579\",\n    \"postCode\": \"1111\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/profiles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"profiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "af1f8ff5-b9f2-4f8e-b9e1-2afdf3327c85",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);",
+							"",
+							"tests['Response contains \"user\" property'] = responseJSON.hasOwnProperty('user');",
+							"",
+							"var user = responseJSON.user || {};",
+							"",
+							"tests['User has \"email\" property'] = user.hasOwnProperty('email');",
+							"tests['User has \"username\" property'] = user.hasOwnProperty('username');",
+							"tests['User has \"token\" property'] = user.hasOwnProperty('token');",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"z\",\n    \"gender\": false,\n    \"dob\": \"2019-10-28\",\n    \"phoneNo\": \"425569579\",\n    \"postCode\": 2209\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/profiles/1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"profiles",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

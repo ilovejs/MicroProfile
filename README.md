@@ -1,19 +1,39 @@
-# CQRS Workflow
+# Version 1: CQRS Workflow
 
 FroneEnd -> Nginx -> /POST/profile [Profile Service] -> NATS -> [Pusher Services] (WebSockets) -> FroneEnd
                                    -> Write DB (Postgres)
                      /GET/profiles [Query Service] -> Read DB
+                     
+# Final version: Simpler workflow without nginx
+FroneEnd -> Nginx -> /POST/profile [Profile Service] -> NATS 
+                         -> Write DB (Postgres)
+                     /GET/profiles [Query Service] -> Read DB
 
-# Get Go Dependencies
+# Issues of using Nginx, docker-compse
+    - Bad gate way for /profile/:id
+    - CORS settign in nginx.conf is way too complicated
+    - Push services suppose to push websocket package to user. 
+        But front-end haven't built chat room like service yet.
+      
+# Run local for dev
+## Get Go Dependencies
 code profile
 go mod init
 go mod vendor
+## change connection string in main.go
+## Install nats-server and postgres
 
-# Docker compose
+# 1. Run Docker-compose for stage
 docker-compose up -d --build
+OR
+use sh stop.sh
+sh deploy.sh
+(prune ur docker cache)
 
-# Run front end
+# 2. Must Run front end
 cd frontend && yarn && yarn serve
+
+# Notes:
 handle members profiles
 
 # API
