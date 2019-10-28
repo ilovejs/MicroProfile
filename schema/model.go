@@ -2,7 +2,7 @@ package schema
 
 import "time"
 
-// for create
+// for create, update
 type ProfileReq struct {
 	Name     string `json:"name" validate:"required"`
 	Gender   bool   `json:"gender"`

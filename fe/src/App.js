@@ -59,12 +59,13 @@ const App = () => {
 
 	const editRow = user => {
     setEditing(true)
+    console.log("editRow", user.dob.substr(0, 10))
     // { id: 1, name: 'Tania', gender: 0, dob: "2019-03-01", postcode: "2001", phoneNo: "0423312313" },
     setCurrentProfile({
       id: user.id,
       name: user.name,
       gender: user.gender,
-      dob: user.dob,
+      dob: user.dob.substr(0, 10),
       postCode: user.postCode,
       phoneNo: user.phoneNo
     })
