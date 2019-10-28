@@ -1,37 +1,48 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import AddProfileForm from './forms/AddProfileForm'
 import EditProfileForm from './forms/EditProfileForm'
 import ProfileTable from './tables/ProfileTable'
+import axios from 'axios'
 
 const App = () => {
-	// Data
-	const usersData = [
-		{ id: 1, name: 'Tasha', gender: 0, dob: "2019-03-01", postCode: "2001", phoneNo: "0423312313" },
-		{ id: 2, name: 'Mike', gender: 1, dob: "2009-03-01", postCode: "3001", phoneNo: "042222222" },
-		{ id: 3, name: 'Joe', gender: 0, dob: "2001-02-11", postCode: "2011", phoneNo: "0433333333" },
-	]
+
+  const [ data, setData  ] = useState({ profiles: []});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios('http://localhost:8080/profiles')
+      console.log(result)
+      setData(result.data)
+    }
+    fetchData()
+  }, []);
+
+  // Setting states
+	// const profileData = [
+	// 	{ id: 1, name: 'Tasha', gender: 0, dob: "2019-03-01", postCode: "2001", phoneNo: "0423312313" },
+	// 	{ id: 2, name: 'Mike', gender: 1, dob: "2009-03-01", postCode: "3001", phoneNo: "042222222" },
+	// 	{ id: 3, name: 'Joe', gender: 0, dob: "2001-02-11", postCode: "2011", phoneNo: "0433333333" },
+	// ]
 
 	const initialFormState = { id: 4, name: '', gender: 0, dob: "2001-02-11", postCode: "2011", phoneNo: ""  }
-
-	// Setting state
-	const [ profiles, setProfiles ] = useState(usersData)
 	const [ currentProfile, setCurrentProfile ] = useState(initialFormState)
-	const [ editing, setEditing ] = useState(false)
+
+  const [ editing, setEditing ] = useState(false)
 
 	// CRUD
 	const addProfile = profile => {
-		profile.id = profiles.length + 1
-		setProfiles([ ...profiles, profile ])
+		profile.id = data.length + 1
+		setData([ ...data, profile ])
 	}
 
 	const deleteProfile = id => {
 		setEditing(false)
-		setProfiles(profiles.filter(p => p.id !== id))
+		setData(data.filter(p => p.id !== id))
 	}
 
 	const updateProfile = (id, updatedProfile) => {
 		setEditing(false)
-		setProfiles(profiles.map(p => (p.id === id ? updatedProfile : p)))
+		setData(data.map(p => (p.id === id ? updatedProfile : p)))
 	}
 
 	const editRow = user => {
@@ -73,7 +84,7 @@ const App = () => {
 				<div className="flex-large">
 					<h2>View users</h2>
           <ProfileTable
-            profiles={profiles}
+            profiles={data}
             editRow={editRow}
             deleteProfile={deleteProfile} />
 				</div>
