@@ -21,12 +21,13 @@ FroneEnd -> Nginx -> /POST/profile [Profile Service] -> NATS
         But front-end haven't built chat room like service yet.
       
 ### Run local for dev
-## Get Go Dependencies
+* Get Go Dependencies
     code profile
     go mod init
     go mod vendor
-## change connection string in main.go
-## Install nats-server and postgres
+
+* change connection string in main.go
+* Install nats-server and postgres
 
 ## 1. Run Docker-compose for stage
     docker-compose up -d --build
@@ -36,7 +37,7 @@ FroneEnd -> Nginx -> /POST/profile [Profile Service] -> NATS
     (prune ur docker cache)
 
 ## 2. Must Run front end
-    cd frontend && yarn && yarn serve
+    cd fe && yarn && yarn serve
 
 ### Questions:
 Handle members profiles
@@ -99,7 +100,7 @@ PS:
  You are not required to complete all solutions, but be sure the first 2 (web API and Interface) and the last (Codebase/Versioning/Documentation) are working. 
  Try to complete as much as possible, every solution counts.
 
-### libraries:
+### Libraries:
 
 [mux]
 https://www.gorillatoolkit.org/pkg/handlers
